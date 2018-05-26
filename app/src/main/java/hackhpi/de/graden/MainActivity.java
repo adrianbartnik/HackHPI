@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         for (Garden garden : getGardens()) {
             LatLng latLng = new LatLng(garden.lat, garden.lng);
-            googleMap.addMarker(new MarkerOptions().position(latLng).title(garden.name));
+            Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(garden.name));
+            marker.setTag(garden);
         }
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BERLIN, 13));
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public boolean onMarkerClick(Marker marker) {
 
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra(DetailActivity.GARDEN_PARAMETER, (Garden) marker.getTag());
                 startActivity(intent);
 
                 return true;
