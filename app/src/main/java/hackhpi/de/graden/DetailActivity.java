@@ -3,16 +3,23 @@ package hackhpi.de.graden;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class DetailActivity extends AppCompatActivity {
 
     public static String GARDEN_PARAMETER = "garden_parameter";
+
+    private final Integer[] GardenImages = {R.drawable.scale1, R.drawable.scale2, R.drawable.scale3, R.drawable.scale4};
+    private ArrayList<Integer> Images = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +27,9 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Garden garden = (Garden) getIntent().getSerializableExtra(GARDEN_PARAMETER);
 
@@ -51,9 +61,6 @@ public class DetailActivity extends AppCompatActivity {
         TextView people = (TextView) findViewById(R.id.people);
         people.setText(garden.numberOfMembers);
 
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
-//        getActionBar().setDisplayShowHomeEnabled(true);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +69,16 @@ public class DetailActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        init();
     }
 
+    private void init() {
+        Collections.addAll(Images, GardenImages);
+
+        ViewPager mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setAdapter(new ImageAdapter(DetailActivity.this, Images));
+        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
+        indicator.setViewPager(mPager);
+    }
 }

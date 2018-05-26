@@ -9,7 +9,7 @@ public class Garden implements Serializable {
     public String size = "Very Big";
     public String listOfPlants = "Jungle";
     public String owner = "City of Berlin";
-    public String numberOfMembers = "Everyone,\nDirk, \nDieter, \nDarya, \nFelix";
+    public String numberOfMembers = "Everyone, Dirk, Dieter, Darya, Felix";
     public String livestock = "Chickens, Cows, Dragons";
     public int imageID;
     public double lng, lat;
