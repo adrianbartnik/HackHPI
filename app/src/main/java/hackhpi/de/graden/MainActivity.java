@@ -7,8 +7,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -25,8 +23,6 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    MainActivity mainActivity;
-
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -39,10 +35,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 case R.id.navigation_home:
                     fragment = getMapFragment();
                     break;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_messages:
                     Toast.makeText(getApplicationContext(), "Sorry, not implemented :(", Toast.LENGTH_LONG).show();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_profile:
                     Toast.makeText(getApplicationContext(), "Profile", Toast.LENGTH_LONG).show();
                     return true;
             }
@@ -63,6 +59,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        Fragment fragment = getMapFragment();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content, fragment, "blub")
+                .commit();
     }
 
     public Fragment getMapFragment() {
@@ -73,14 +76,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         return fragment;
     }
 
+    private static final LatLng BERLIN = new LatLng(52.520008, 13.404954);
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         for (Garden garden : getGardens()) {
             LatLng latLng = new LatLng(garden.lat, garden.lng);
             googleMap.addMarker(new MarkerOptions().position(latLng).title(garden.name));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         }
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BERLIN, 13));
 
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -102,8 +109,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             garden.name = "Garden " + i;
             garden.owner = "Owner " + i;
-            garden.lat = 52.520008 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .3 : -new Random().nextFloat() * .3);
-            garden.lng = 13.404954 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .3 : -new Random().nextFloat() * .3);
+            garden.lat = 52.520008 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);
+            garden.lng = 13.404954 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);
 
             gardens.add(garden);
         }
