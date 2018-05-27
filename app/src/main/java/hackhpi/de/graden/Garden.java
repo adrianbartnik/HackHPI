@@ -1,17 +1,20 @@
 package hackhpi.de.graden;
 
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
+
 import java.io.Serializable;
 
 public class Garden implements Serializable {
     public String type = "Private";
     public String location = "Prof.-Dr.-Helmert-Straße 2-3, 14482 Potsdam";
-    public String soil = "ChocolateBananas";
-    public String size = "Very Big";
-    public String listOfPlants = "Jungle";
-    public String owner = "City of Berlin";
-    public String numberOfMembers = "Everyone, Dirk, Dieter, Darya, Felix";
+    public String size = "50m²";
+    public String listOfPlants = "Tomatoes, Potatoes, Venus Flytrap";
+    public String owner = "Florian Wirtz";
+    public String numberOfMembers = "Lukas Heilmann, Jakob Edding, Ann Katrin Kuessner";
     public String livestock = "Chickens, Cows, Dragons";
-    public int imageID;
+    @DrawableRes public int imageID = R.drawable.flo;
+    @DrawableRes public int headerImage = R.drawable.garden1;
     public double lng, lat;
-    public String name;
+    public String name = "Go with the Flo";
 }

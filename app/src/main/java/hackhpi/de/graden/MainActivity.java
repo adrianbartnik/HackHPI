@@ -123,8 +123,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < 5; i++) {
             Garden garden = new Garden();
 
-            garden.name = "Garden " + i;
-            garden.owner = "Owner " + i;
             garden.type = (new Random()).nextBoolean() ? "Private" : "Public";
             garden.lat = 52.520008 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);
             garden.lng = 13.404954 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);

@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
+    android:paddingTop="4dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailActivity">
 
@@ -23,15 +26,17 @@
             android:clickable="true"
             android:padding="@dimen/activity_horizontal_margin">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ownerImage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:scaleType="centerCrop"
-                android:src="@drawable/oma" />
+                android:src="@drawable/flo"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/black_trans80"/>
 
             <TextView
                 android:id="@+id/owner"
@@ -39,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:layout_toEndOf="@id/ownerImage"
                 android:layout_toRightOf="@id/ownerImage"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"

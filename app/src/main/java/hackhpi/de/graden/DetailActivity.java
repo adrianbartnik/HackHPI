@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,9 +40,14 @@ public class DetailActivity extends AppCompatActivity {
 
         setTitle(garden.name);
 
-
         TextView owner = (TextView) findViewById(R.id.owner);
         owner.setText(garden.owner);
+
+        ImageView picture = (ImageView) findViewById(R.id.ownerImage);
+        picture.setImageDrawable(getResources().getDrawable(garden.imageID));
+
+        ImageView headerPicture = (ImageView) findViewById(R.id.detail_header);
+        headerPicture.setImageDrawable(getResources().getDrawable(garden.headerImage));
 
         TextView location = (TextView) findViewById(R.id.location);
         location.setText(garden.location);
