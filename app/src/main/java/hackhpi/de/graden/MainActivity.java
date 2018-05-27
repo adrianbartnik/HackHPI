@@ -13,6 +13,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -84,11 +86,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         for (Garden garden : getGardens()) {
             LatLng latLng = new LatLng(garden.lat, garden.lng);
-            Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(garden.name));
+
+            BitmapDescriptor bitmap;
+
+            if (garden.type.equals("Private")) {
+                bitmap = BitmapDescriptorFactory.fromResource(R.drawable.flower_closed);
+            } else {
+                bitmap = BitmapDescriptorFactory.fromResource(R.drawable.flower_open);
+            }
+
+            Marker marker = googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(garden.name)
+                    .icon(bitmap));
             marker.setTag(garden);
         }
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BERLIN, 13));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(BERLIN, 15));
 
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -111,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             garden.name = "Garden " + i;
             garden.owner = "Owner " + i;
+            garden.type = (new Random()).nextBoolean() ? "Private" : "Public";
             garden.lat = 52.520008 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);
             garden.lng = 13.404954 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);
 
