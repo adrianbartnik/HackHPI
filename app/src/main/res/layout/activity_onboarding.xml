@@ -9,9 +9,11 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
+        android:background="@android:color/transparent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="?attr/actionBarSize" />
+
 
     <ImageView
         android:id="@+id/background_logo"
@@ -19,7 +21,6 @@
         android:layout_height="300dp"
         android:layout_gravity="center"
         android:src="@drawable/rotate_image_01"/>
-
 
     <View
         android:layout_width="match_parent"

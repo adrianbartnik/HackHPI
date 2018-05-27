@@ -1,8 +1,10 @@
 package hackhpi.de.graden;
 
 import android.animation.ArgbEvaluator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -34,7 +36,7 @@ public class OnboardingActivity extends AppCompatActivity implements ViewPager.P
     private Button mFinishBtn;
     private ImageView[] indicators;
     private int page = 0;   //  to track page position
-    private ImageView backgroundImage;
+    private ImageView backgroundImage, colawnyIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class OnboardingActivity extends AppCompatActivity implements ViewPager.P
         setContentView(R.layout.activity_onboarding);
 
         backgroundImage = (ImageView) findViewById(R.id.background_logo);
+        colawnyIcon = (ImageView) findViewById(R.id.colawny_icon);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
@@ -68,8 +71,8 @@ public class OnboardingActivity extends AppCompatActivity implements ViewPager.P
         mViewPager.setCurrentItem(page);
         updateIndicators(page);
 
-        final int color1 = ContextCompat.getColor(this, R.color.cyan);
-        final int color2 = ContextCompat.getColor(this, R.color.orange);
+        final int color1 = ContextCompat.getColor(this, R.color.lime);
+        final int color2 = ContextCompat.getColor(this, R.color.light_green);
         final int color3 = ContextCompat.getColor(this, R.color.green);
 
         final int[] colorList = new int[]{color1, color2, color3};
@@ -171,6 +174,22 @@ public class OnboardingActivity extends AppCompatActivity implements ViewPager.P
         int pageWidth = view.getWidth();
         int fragmentPosition = (int) view.getTag();
 
+//        if (fragmentPosition == 0) {
+//            if (position < -1) { // [-Infinity,-1)
+//                // This page is way off-screen to the left.
+//                colawnyIcon.setAlpha(1f);
+//
+//            } else if (position <= 1) { // [-1,1]
+//
+////                colawnyIcon.setAlpha((float) (-(1 - position) * 0.5 * pageWidth));
+//                colawnyIcon.setAlpha(position);
+//
+//            } else { // (1,+Infinity]
+//                // This page is way off-screen to the right.
+//                colawnyIcon.setAlpha(0f);
+//            }
+//        }
+
         if (fragmentPosition == 1) {
             if (position < -1) { // [-Infinity,-1)
                 // This page is way off-screen to the left.
@@ -223,17 +242,62 @@ public class OnboardingActivity extends AppCompatActivity implements ViewPager.P
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_pager, container, false);
-            TextView textView = rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = null;
 
-            img = rootView.findViewById(R.id.section_img);
-            img.setBackgroundResource(bgs[getArguments().getInt(ARG_SECTION_NUMBER) - 1]);
-            rootView.setTag(getArguments().getInt(ARG_SECTION_NUMBER) - 1);
+            switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
+                case 1:
+                    rootView = inflater.inflate(R.layout.fragment_pager_1, container, false);
+                    rootView.setTag(getArguments().getInt(ARG_SECTION_NUMBER) - 1);
 
+                    break;
+                case 2:
+                    rootView = inflater.inflate(R.layout.fragment_pager_2, container, false);
+                    rootView.setTag(getArguments().getInt(ARG_SECTION_NUMBER) - 1);
+                    break;
+                case 3:
+                    rootView = inflater.inflate(R.layout.fragment_pager_3, container, false);
+                    rootView.setTag(getArguments().getInt(ARG_SECTION_NUMBER) - 1);
+
+                    Button button1 = rootView.findViewById(R.id.button1);
+                    setRoundedDrawable(getContext(), button1, R.color.green, R.color.light_blue);
+                    Button button2 = rootView.findViewById(R.id.button2);
+                    setRoundedDrawable(getContext(), button2, R.color.green, R.color.light_blue);
+
+                    button1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    button2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+
+                    break;
+                default:
+                    throw new IllegalStateException();
+            }
 
             return rootView;
         }
+    }
+
+    public static void setRoundedDrawable(Context context, View view, int backgroundColor, int borderColor) {
+        GradientDrawable shape = new GradientDrawable();
+        shape.setShape(GradientDrawable.RECTANGLE);
+        shape.setCornerRadius(20f);
+        shape.setColor(backgroundColor);
+        if (borderColor != 0){
+            shape.setStroke(2, borderColor);
+        }
+        view.setBackgroundDrawable(shape);
     }
 
     /**
