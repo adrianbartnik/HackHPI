@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -68,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .beginTransaction()
                 .replace(R.id.content, fragment, "blub")
                 .commit();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setIcon(R.drawable.colawny_logo_scaled);
     }
 
     public Fragment getMapFragment() {
@@ -90,9 +95,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             BitmapDescriptor bitmap;
 
             if (garden.type.equals("Private")) {
-                bitmap = BitmapDescriptorFactory.fromResource(R.drawable.flower_closed);
+                bitmap = BitmapDescriptorFactory.fromResource(R.drawable.flower_update_cloes);
             } else {
-                bitmap = BitmapDescriptorFactory.fromResource(R.drawable.flower_open);
+                bitmap = BitmapDescriptorFactory.fromResource(R.drawable.flower_update_open);
             }
 
             Marker marker = googleMap.addMarker(new MarkerOptions()
