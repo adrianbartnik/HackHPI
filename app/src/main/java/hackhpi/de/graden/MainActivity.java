@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Toast.makeText(getApplicationContext(), "Sorry, not implemented :(", Toast.LENGTH_LONG).show();
                     return true;
                 case R.id.navigation_profile:
-                    Toast.makeText(getApplicationContext(), "Profile", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Sorry, not implemented :(", Toast.LENGTH_LONG).show();
                     return true;
             }
 
@@ -125,12 +125,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public List<Garden> getGardens() {
         List<Garden> gardens = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             Garden garden = new Garden();
 
             garden.type = (new Random()).nextBoolean() ? "Private" : "Public";
             garden.lat = 52.520008 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);
             garden.lng = 13.404954 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .005 : -new Random().nextFloat() * .005);
+
+            gardens.add(garden);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Garden garden = new Garden();
+
+            garden.type = "Public";
+            garden.owner = "Lukas Heilmann";
+            garden.name = "Playground";
+            garden.imageID = R.drawable.lukas;
+            garden.headerImage = R.drawable.garden2;
+            garden.listOfPlants = "Mushrooms and Stuff";
+            garden.location = "Pariser Platz, 10117 Berlin";
+
+            garden.type = (new Random()).nextBoolean() ? "Private" : "Public";
+            garden.lat = 52.520008 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .006 : -new Random().nextFloat() * .006);
+            garden.lng = 13.404954 + ((new Random().nextBoolean()) ? new Random().nextFloat() * .006 : -new Random().nextFloat() * .006);
 
             gardens.add(garden);
         }
